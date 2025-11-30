@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MathVenture - Login</title>
+	<style>
+	/* FULL BACKGROUND */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('background.png');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Center Layout */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Form Box */
+.form-box {
+    width: 500px;
+    background: #f2a026;
+    padding: 40px 50px;
+    border-radius: 30px;
+    text-align: center;
+}
+
+/* Logo + Title */
+.logo-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 70px;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 3px 2px rgba(0,0,0,0.1);
+}
+
+/* Input Field */
+.input-field {
+    width: 100%;
+    padding: 18px;
+    margin: 12px 0;
+    font-size: 20px;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    background: white;
+}
+
+/* Login Button */
+.btn-login {
+    width: 80%;
+    padding: 16px;
+    background: #c9c5c5;
+    border: none;
+    border-radius: 40px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: 0.2s;
+}
+
+.btn-login:hover {
+    transform: translateY(-3px);
+    background: #d7d5d5;
+}
+
+/* Register Text */
+.register-text {
+    margin-top: 20px;
+    font-size: 20px;
+    color: white;
+}
+
+.register-text a {
+    color: #004aad;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+	</style>
+  
+</head>
+<body>
+
+<div class="container">
+    <div class="form-box">
+
+        <!-- Logo -->
+        <div class="logo-area">
+            <img src="logo.png" class="logo">
+            <h1 class="title">MathVenture</h1>
+        </div>
+
+        <!-- Form -->
+        <input type="text" placeholder="Username" class="input-field">
+        <input type="password" placeholder="Password" class="input-field">
+
+        <!-- Button -->
+        <button class="btn-login">Login</button>
+
+        <!-- Register -->
+        <p class="register-text">
+            Belum punya akun?
+            <a href="register.html">Register di sini</a>
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>

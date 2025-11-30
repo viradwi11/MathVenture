@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bekal Penjumlahan - MathVenture</title>
+    <!-- Memuat Tailwind CSS dari CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Mengatur font dasar dan latar belakang */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px 0;
+            
+            /* Background Awan */
+            /* Catatan: URL lokal 'http://localhost' mungkin tidak bekerja di lingkungan ini. */
+            /* Jika Anda mengunggah gambar, ganti URL di bawah ini. */
+            background-image: url('http://localhost/mathventure/imgmathventure/bg.petualangan.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        /* Kontainer Utama untuk seluruh konten materi */
+        .main-container {
+            max-width: 900px;
+            width: 95%;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95); /* Latar belakang putih semi-transparan */
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling Judul Slide (BEKAL PENJUMLAHAN) */
+        .main-title {
+            background-color: #fca311;
+            color: #1f2937;
+            padding: 0.5rem 2rem;
+            border-radius: 9999px;
+            font-size: 2rem;
+            font-weight: 900;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            border: 4px solid #1f2937;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Styling Kotak Definisi (Warna Oranye) */
+        .definition-box {
+            background-color: #ffb84a; 
+            color: black;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 3rem;
+            border: 3px solid #fca311; 
+        }
+
+        /* Styling untuk bagian hitungan susun */
+        .calculation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            max-width: 250px;
+            margin-top: 0.5rem;
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            color: #1f2937;
+        }
+        
+        /* Styling untuk angka simpanan (kecil di atas) */
+        .carry-over {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2563eb; /* Biru untuk angka yang disimpan */
+            text-align: center;
+            margin-bottom: -10px; /* Tarik ke atas sedikit */
+        }
+
+        /* Garis bawah untuk hasil penjumlahan */
+        .sum-line {
+            border-bottom: 4px solid #1f2937;
+            height: 1px;
+            margin-top: 5px;
+            width: 100%;
+            grid-column: 1 / span 2;
+        }
+        
+        /* Box Hasil Akhir */
+        .result-box {
+            background-color: #ffb84a;
+            color: #1f2937;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-size: 1.75rem;
+            font-weight: 900;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            border: 3px solid #fca311;
+        }
+        
+        /* --- ANTIMASI MASUK TEKS (FADE IN UP) --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        .animated-text {
+            /* Sembunyikan elemen sebelum animasi dimulai */
+            opacity: 0; 
+            /* Set animasi dasar */
+            animation: fadeInUp 0.7s forwards; 
+            /* Ambil nilai delay dari custom property */
+            animation-delay: var(--delay); 
+        }
+
+        /* Penyesuaian responsif */
+        @media (max-width: 640px) {
+            .main-title { font-size: 1.5rem; }
+            .definition-box { font-size: 1.1rem; padding: 1rem; }
+            .calculation-grid { font-size: 1.5rem; }
+            .result-box { font-size: 1.25rem; }
+            .main-container { padding: 1rem; }
+        }
+/* Gaya CSS untuk Tombol Lanjut */
+.continue-button {
+    /* Posisi tetap di layar, tidak bergerak saat di-scroll */
+    position: fixed; 
+    
+    /* Posisikan 30px dari kanan dan 30px dari bawah */
+    right: 30px; 
+    bottom: 50px;
+    
+    /* Gaya visual tombol */
+    padding: 12px 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #ee5578; /* Warna biru */
+    border: 2px solid #ee5578;
+    border-radius: 8px;
+    cursor: pointer; /* Menunjukkan bahwa ini dapat diklik */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    z-index: 100; /* Pastikan tombol selalu di atas elemen lain */
+}
+
+/* Efek saat tombol disentuh/hover */
+.continue-button:hover {
+    background-color: #e82c57;
+}
+    </style>
+</head>
+<body>
+
+    <!-- Kontainer Utama Semua Materi -->
+    <div class="main-container">
+
+        <div class="flex justify-center w-full">
+            <!-- Animasi 0.0s -->
+            <div class="main-title animated-text" style="--delay: 0.0s;">BEKAL PENJUMLAHAN</div>
+        </div>
+
+        <div class="flex justify-center w-full">
+            <!-- Animasi 0.3s -->
+            <div class="definition-box max-w-2xl animated-text" style="--delay: 0.3s;">
+                Penjumlahan adalah kegiatan menggabungkan dua angka atau lebih untuk mendapatkan jumlahnya. Hasil penjumlahan selalu lebih besar dari angka-angka yang digabungkan.
+            </div>
+        </div>
+
+        <!-- Bagian 1: Cara Tanpa Menyimpan -->
+        <section class="mb-16">
+            <!-- Animasi 0.6s -->
+            <h2 class="text-3xl font-extrabold text-red-600 text-center mb-6 animated-text" style="--delay: 0.6s;">
+                Cara Menyelesaikan Soal Penjumlahan
+            </h2>
+
+            <div class="space-y-8 text-left mx-auto px-4">
+                <!-- Animasi 0.9s -->
+                <h3 class="font-extrabold text-3xl text-blue-800 flex items-center mb-4 border-b-4 border-blue-200 pb-2 animated-text" style="--delay: 0.9s;">
+                    <span class="mr-3 text-yellow-500 text-3xl">⭐</span>
+                    Cara Tanpa Menyimpan (Contoh: 24 + 15)
+                </h3>
+
+                <!-- Langkah 1: Susun bilangan -->
+                <div class="ml-4">
+                    <!-- Animasi 1.2s -->
+                    <p class="text-2xl font-extrabold text-gray-900 mb-4 animated-text" style="--delay: 1.2s;">
+                        1. Susun bilangan dengan menempatkan bilangan puluhan lurus dengan puluhan dan satuan lurus dengan satuan.
+                    </p>
+                    <div class="flex flex-col items-center mt-4 mb-8">
+                        <!-- Animasi 1.4s (Header dan Angka) -->
+                        <div class="calculation-grid border-b-4 border-gray-600 pb-2 mb-2 w-full max-w-[150px] mx-auto animated-text" style="--delay: 1.4s;">
+                            <span class="font-extrabold text-blue-800">Puluhan</span>
+                            <span class="font-extrabold text-red-600">Satuan</span>
+                        </div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 1.6s;"><span>2</span><span>4</span></div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto relative animated-text" style="--delay: 1.8s;">
+                            <span>1</span>
+                            <span>5</span>
+                            <span class="absolute right-[-20px] top-0 text-red-600 font-extrabold text-3xl">+</span>
+                        </div>
+                        <div class="sum-line w-full max-w-[150px] mx-auto animated-text" style="--delay: 2.0s;"></div>
+                    </div>
+                </div>
+
+                <!-- Langkah 2: Jumlahkan satuan -->
+                <div class="ml-4">
+                    <!-- Animasi 2.3s -->
+                    <p class="text-2xl font-extrabold text-gray-900 mb-4 animated-text" style="--delay: 2.3s;">
+                        2. Jumlahkan bilangan satuan dengan satuan. (4 + 5 = 9)
+                    </p>
+                    <div class="flex flex-col items-center mt-4 mb-8">
+                        <div class="calculation-grid border-b-4 border-gray-600 pb-2 mb-2 w-full max-w-[150px] mx-auto opacity-100" style="animation: none;">
+                            <span class="font-extrabold text-blue-800">Puluhan</span>
+                            <span class="font-extrabold text-red-600">Satuan</span>
+                        </div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"><span>2</span><span>4</span></div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto relative opacity-100" style="animation: none;">
+                            <span>1</span>
+                            <span>5</span>
+                            <span class="absolute right-[-20px] top-0 text-red-600 font-extrabold text-3xl">+</span>
+                        </div>
+                        <div class="sum-line w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"></div>
+                        <!-- Hasil Satuan (9) - Animasi 2.6s -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 2.6s;">
+                            <span></span>
+                            <span class="text-3xl">9</span> 
+                        </div>
+                        <!-- Explanation Box - Animasi 2.9s -->
+                        <div class="mt-8 text-center animated-text" style="--delay: 2.9s;">
+                            <span class="inline-block text-lg font-extrabold bg-yellow-300 px-4 py-2 rounded-full shadow-md whitespace-normal">
+                                Jumlahkan satuan (4 + 5 = 9).
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Langkah 3: Jumlahkan puluhan -->
+                <div class="ml-4 pt-10">
+                    <!-- Animasi 3.2s -->
+                    <p class="text-2xl font-extrabold text-gray-900 mb-4 animated-text" style="--delay: 3.2s;">
+                        3. Jumlahkan bilangan puluhan dengan puluhan. (2 + 1 = 3)
+                    </p>
+                    <div class="flex flex-col items-center mt-4 mb-8">
+                        <div class="calculation-grid border-b-4 border-gray-600 pb-2 mb-2 w-full max-w-[150px] mx-auto opacity-100" style="animation: none;">
+                            <span class="font-extrabold text-blue-800">Puluhan</span>
+                            <span class="font-extrabold text-red-600">Satuan</span>
+                        </div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"><span>2</span><span>4</span></div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto relative opacity-100" style="animation: none;">
+                            <span>1</span>
+                            <span>5</span>
+                            <span class="absolute right-[-20px] top-0 text-red-600 font-extrabold text-3xl">+</span>
+                        </div>
+                        <div class="sum-line w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"></div>
+                        <!-- Hasil Akhir (39) - Animasi 3.5s -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 3.5s;">
+                            <span class="text-3xl">3</span>
+                            <span class="text-3xl">9</span>
+                        </div>
+                        <!-- Explanation Box - Animasi 3.8s -->
+                        <div class="mt-8 text-center animated-text" style="--delay: 3.8s;">
+                            <span class="inline-block text-lg font-extrabold bg-yellow-300 px-4 py-2 rounded-full shadow-md whitespace-normal">
+                                Jumlahkan puluhan (2 + 1 = 3).
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box Hasil Akhir - Animasi 4.1s -->
+                <div class="flex justify-center">
+                    <div class="result-box animated-text" style="--delay: 4.1s;">
+                        Jadi, hasil dari 24 + 15 = 39
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Bagian 2: Cara Dengan Menyimpan -->
+        <section class="mt-16 pt-8 border-t-4 border-gray-300">
+            <div class="space-y-8 text-left mx-auto px-4">
+                <!-- Animasi 4.4s -->
+                <h3 class="font-extrabold text-3xl text-blue-800 flex items-center mb-4 border-b-4 border-blue-200 pb-2 animated-text" style="--delay: 4.4s;">
+                    <span class="mr-3 text-yellow-500 text-3xl">⭐</span>
+                    Cara dengan Menyimpan (Contoh: 48 + 14)
+                </h3>
+
+                <!-- Langkah 1: Susun bilangan -->
+                <div class="ml-4">
+                    <!-- Animasi 4.7s -->
+                    <p class="text-2xl font-extrabold text-gray-900 mb-4 animated-text" style="--delay: 4.7s;">
+                        1. Susun bilangan lurus puluhan dan satuan.
+                    </p>
+                    <div class="flex flex-col items-center mt-4 mb-8">
+                        <!-- Animasi 4.9s -->
+                        <div class="calculation-grid border-b-4 border-gray-600 pb-2 mb-2 w-full max-w-[150px] mx-auto animated-text" style="--delay: 4.9s;">
+                            <span class="font-extrabold text-blue-800">Puluhan</span>
+                            <span class="font-extrabold text-red-600">Satuan</span>
+                        </div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 5.1s;"><span>4</span><span>8</span></div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto relative animated-text" style="--delay: 5.3s;">
+                            <span>1</span>
+                            <span>4</span>
+                            <span class="absolute right-[-20px] top-0 text-red-600 font-extrabold text-3xl">+</span>
+                        </div>
+                        <div class="sum-line w-full max-w-[150px] mx-auto animated-text" style="--delay: 5.5s;"></div>
+                    </div>
+                </div>
+
+
+                <!-- Langkah 2: Jumlahkan satuan dengan menyimpan -->
+                <div class="ml-4">
+                    <!-- Animasi 5.8s -->
+                    <p class="text-2xl font-extrabold text-gray-900 mb-4 animated-text" style="--delay: 5.8s;">
+                        2. Jumlahkan bilangan satuan dengan satuan. (8 + 4 = 12, simpan 1 di puluhan).
+                    </p>
+                    <div class="flex flex-col items-center mt-4 mb-8">
+                        <!-- Angka simpanan (1 di atas Puluhan) - Animasi 6.1s -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 6.1s;">
+                            <span class="carry-over">1</span>
+                            <span></span>
+                        </div>
+                        <!-- Header Puluhan | Satuan (Dipertahankan agar tidak terjadi CLS) -->
+                        <div class="calculation-grid border-b-4 border-gray-600 pb-2 mb-2 w-full max-w-[150px] mx-auto opacity-100" style="animation: none;">
+                            <span class="font-extrabold text-blue-800">Puluhan</span>
+                            <span class="font-extrabold text-red-600">Satuan</span>
+                        </div>
+                        <!-- Angka-angka -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"><span>4</span><span>8</span></div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto relative opacity-100" style="animation: none;">
+                            <span>1</span>
+                            <span>4</span>
+                            <span class="absolute right-[-20px] top-0 text-red-600 font-extrabold text-3xl">+</span>
+                        </div>
+                        <div class="sum-line w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"></div>
+                        <!-- Hasil Satuan (2) - Animasi 6.4s -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 6.4s;">
+                            <span></span>
+                            <span class="text-3xl">2</span>
+                        </div>
+
+                        <!-- Penjelasan Menyimpan - Animasi 6.7s -->
+                        <div class="mt-8 text-center animated-text" style="--delay: 6.7s;">
+                            <span class="inline-block bg-yellow-300 text-gray-900 font-extrabold p-3 rounded-xl shadow-md text-lg text-left whitespace-normal max-w-sm">
+                                Hasil 8 + 4 = 12. Tulis 2 di kolom satuan, dan simpan 1 pada kolom puluhan.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Langkah 3: Jumlahkan puluhan (termasuk simpanan) -->
+                <div class="ml-4 pt-10">
+                    <!-- Animasi 7.0s -->
+                    <p class="text-2xl font-extrabold text-gray-900 mb-4 animated-text" style="--delay: 7.0s;">
+                        3. Jumlahkan bilangan puluhan (termasuk angka simpanan). (1 + 4 + 1 = 6)
+                    </p>
+                    <div class="flex flex-col items-center mt-4 mb-8">
+                        <!-- Angka simpanan (1 di atas Puluhan) (Dipertahankan) -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto opacity-100" style="animation: none;">
+                            <span class="carry-over">1</span>
+                            <span></span>
+                        </div>
+                        <!-- Header Puluhan | Satuan (Dipertahankan) -->
+                        <div class="calculation-grid border-b-4 border-gray-600 pb-2 mb-2 w-full max-w-[150px] mx-auto opacity-100" style="animation: none;">
+                            <span class="font-extrabold text-blue-800">Puluhan</span>
+                            <span class="font-extrabold text-red-600">Satuan</span>
+                        </div>
+                        <!-- Angka-angka -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"><span>4</span><span>8</span></div>
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto relative opacity-100" style="animation: none;">
+                            <span>1</span>
+                            <span>4</span>
+                            <span class="absolute right-[-20px] top-0 text-red-600 font-extrabold text-3xl">+</span>
+                        </div>
+                        <div class="sum-line w-full max-w-[150px] mx-auto opacity-100" style="animation: none;"></div>
+                        <!-- Hasil Akhir (62) - Animasi 7.3s -->
+                        <div class="calculation-grid w-full max-w-[150px] mx-auto animated-text" style="--delay: 7.3s;">
+                            <span class="text-3xl">6</span>
+                            <span class="text-3xl">2</span>
+                        </div>
+
+                         <!-- Penjelasan Menyimpan - Animasi 7.6s -->
+                        <div class="mt-8 text-center animated-text" style="--delay: 7.6s;">
+                            <span class="inline-block bg-yellow-300 text-gray-900 font-extrabold p-3 rounded-xl shadow-md text-lg text-left whitespace-normal max-w-sm">
+                                Jumlahkan puluhan: 1 (simpanan) + 4 + 1 = 6.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Box Hasil Akhir - Animasi 7.9s -->
+                <div class="flex justify-center">
+                    <div class="result-box animated-text" style="--delay: 7.9s;">
+                        Jadi, hasil dari 48 + 14 = 62
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+	<button class="continue-button" onclick="window.location.href='http://localhost/mathventure/level1.php'">
+    Lanjut
+	</button>
+
+</body>
+</html>

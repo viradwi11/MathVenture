@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bekal Perkalian - MathVenture</title>
+    <!-- Memuat Tailwind CSS dari CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Mengatur font dasar dan latar belakang */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px 0;
+            
+            /* Background Awan */
+            /* Pastikan URL gambar sesuai dengan lokasi file Anda di XAMPP */
+            background-image: url('http://localhost/mathventure/imgmathventure/bg.petualangan.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        /* Kontainer Utama */
+        .main-container {
+            max-width: 900px;
+            width: 95%;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling Judul Slide (BEKAL PERKALIAN) - Tema Ungu */
+        .main-title {
+            background-color: #8b5cf6; /* Ungu Terang */
+            color: #ffffff;
+            padding: 0.5rem 2rem;
+            border-radius: 9999px;
+            font-size: 2rem;
+            font-weight: 900;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            border: 4px solid #5b21b6; /* Ungu Gelap */
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Styling Kotak Definisi */
+        .definition-box {
+            background-color: #ddd6fe; /* Ungu sangat muda */
+            color: #1f2937;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 3rem;
+            border: 3px solid #8b5cf6; 
+        }
+
+        /* Styling Kotak Kelompok Pensil */
+        .group-box {
+            background-color: #ffffff;
+            border: 3px dashed #8b5cf6;
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            margin: 0 5px;
+        }
+
+        .pencil-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        /* Box Hasil Akhir */
+        .result-box {
+            background-color: #c4b5fd;
+            color: #1f2937;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-size: 1.75rem;
+            font-weight: 900;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            border: 3px solid #7c3aed;
+        }
+        
+        /* --- ANIMASI --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translate3d(0, 40px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        .animated-text {
+            opacity: 0; 
+            animation: fadeInUp 0.7s forwards; 
+            animation-delay: var(--delay); 
+        }
+
+        /* Responsif */
+        @media (max-width: 640px) {
+            .main-title { font-size: 1.5rem; }
+            .definition-box { font-size: 1.1rem; padding: 1rem; }
+            .pencil-icon { font-size: 1.5rem; }
+            .group-box { min-width: 60px; }
+            .result-box { font-size: 1.25rem; }
+        }
+		/* Gaya CSS untuk Tombol Lanjut */
+.continue-button {
+    /* Posisi tetap di layar, tidak bergerak saat di-scroll */
+    position: fixed; 
+    
+    /* Posisikan 30px dari kanan dan 30px dari bawah */
+    right: 30px; 
+    bottom: 50px;
+    
+    /* Gaya visual tombol */
+    padding: 12px 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #ee5578; /* Warna biru */
+    border: 2px solid #ee5578;
+    border-radius: 8px;
+    cursor: pointer; /* Menunjukkan bahwa ini dapat diklik */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    z-index: 100; /* Pastikan tombol selalu di atas elemen lain */
+}
+
+/* Efek saat tombol disentuh/hover */
+.continue-button:hover {
+    background-color: #e82c57;
+}
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+
+        <!-- Judul -->
+        <div class="flex justify-center w-full">
+            <div class="main-title animated-text" style="--delay: 0.0s;">BEKAL PERKALIAN</div>
+        </div>
+
+        <!-- Definisi -->
+        <div class="flex justify-center w-full">
+            <div class="definition-box max-w-3xl animated-text" style="--delay: 0.3s;">
+                Operasi perkalian merupakan penjumlahan bilangan yang sama sebanyak bilangan yang berperan sebagai pengali. <br><br>
+                <span class="text-indigo-700">Jadi, perkalian dapat diartikan sebagai penjumlahan berulang.</span>
+            </div>
+        </div>
+
+        <!-- Bagian Contoh Soal -->
+        <section class="mb-16 text-center">
+            <h2 class="text-3xl font-extrabold text-indigo-800 mb-6 animated-text" style="--delay: 0.6s;">
+                Cara Menyelesaikan Soal Perkalian
+            </h2>
+
+            <div class="space-y-8 mx-auto px-4">
+                
+                <p class="text-xl font-bold text-gray-700 animated-text" style="--delay: 0.9s;">
+                    Perhatikan gambar berikut!
+                </p>
+
+                <!-- Visualisasi 5 Kelompok Pensil -->
+                <div class="flex flex-wrap justify-center gap-4 py-4 animated-text" style="--delay: 1.2s;">
+                    
+                    <!-- Kelompok 1 -->
+                    <div class="group-box">
+                        <div class="flex">
+                            <span class="pencil-icon">✏️</span>
+                            <span class="pencil-icon">✏️</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 mt-2 text-xl">2</span>
+                    </div>
+                    <!-- Tanda Tambah -->
+                    <div class="flex items-center text-2xl font-bold text-gray-400">+</div>
+
+                    <!-- Kelompok 2 -->
+                    <div class="group-box">
+                        <div class="flex">
+                            <span class="pencil-icon">✏️</span>
+                            <span class="pencil-icon">✏️</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 mt-2 text-xl">2</span>
+                    </div>
+                     <!-- Tanda Tambah -->
+                     <div class="flex items-center text-2xl font-bold text-gray-400">+</div>
+
+                    <!-- Kelompok 3 -->
+                    <div class="group-box">
+                        <div class="flex">
+                            <span class="pencil-icon">✏️</span>
+                            <span class="pencil-icon">✏️</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 mt-2 text-xl">2</span>
+                    </div>
+                     <!-- Tanda Tambah -->
+                     <div class="flex items-center text-2xl font-bold text-gray-400">+</div>
+
+                    <!-- Kelompok 4 -->
+                    <div class="group-box">
+                        <div class="flex">
+                            <span class="pencil-icon">✏️</span>
+                            <span class="pencil-icon">✏️</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 mt-2 text-xl">2</span>
+                    </div>
+                     <!-- Tanda Tambah -->
+                     <div class="flex items-center text-2xl font-bold text-gray-400">+</div>
+
+                    <!-- Kelompok 5 -->
+                    <div class="group-box">
+                        <div class="flex">
+                            <span class="pencil-icon">✏️</span>
+                            <span class="pencil-icon">✏️</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 mt-2 text-xl">2</span>
+                    </div>
+
+                </div>
+
+                <!-- Penjelasan Teks -->
+                <div class="text-left max-w-2xl mx-auto bg-indigo-50 p-6 rounded-xl border-2 border-indigo-200 animated-text" style="--delay: 1.5s;">
+                    <ul class="list-disc pl-6 space-y-2 text-xl font-semibold text-gray-800">
+                        <li>Pada gambar ditunjukkan ada <span class="text-red-600 font-extrabold">5</span> kelompok pensil.</li>
+                        <li>Setiap kelompok berisi <span class="text-blue-600 font-extrabold">2</span> pensil.</li>
+                    </ul>
+                </div>
+
+                <!-- Kesimpulan Matematika -->
+                <div class="space-y-4 pt-4">
+                    <p class="text-2xl font-bold text-gray-800 animated-text" style="--delay: 1.8s;">
+                        Jumlah seluruhnya adalah:
+                    </p>
+                    
+                    <!-- Rumus Perkalian -->
+                    <div class="text-4xl font-extrabold text-indigo-900 animated-text" style="--delay: 2.1s;">
+                        <span class="text-red-600">5</span> &times; <span class="text-blue-600">2</span> = 10
+                    </div>
+
+                    <p class="text-xl font-semibold text-gray-600 animated-text" style="--delay: 2.3s;">
+                        (artinya angka 2 dijumlahkan sebanyak 5 kali)
+                    </p>
+
+                    <!-- Penjumlahan Berulang -->
+                    <div class="flex justify-center">
+                        <div class="result-box animated-text" style="--delay: 2.6s;">
+                            2 + 2 + 2 + 2 + 2 = 10
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+	<button class="continue-button" onclick="window.location.href='http://localhost/mathventure/level7.php'">
+    Lanjut
+</button>
+</body>
+</html>

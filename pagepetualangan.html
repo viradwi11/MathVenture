@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Mulai Petualangan</title>
+    <style>
+        /* --- 1. Pengaturan Dasar dan Latar Belakang --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Pusatkan konten horizontal */
+            align-items: center; /* Pusatkan konten vertikal */
+            font-family: Arial, sans-serif;
+            
+            /* Menggunakan gambar sebagai latar belakang */
+            background-image: url('http://localhost/mathventure/imgmathventure/petualangan.png'); /* Ganti dengan nama file gambar Anda */
+            background-size: cover; /* Memastikan gambar mencakup seluruh layar */
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* Mengatur kontainer agar bisa menampung elemen di tengah */
+            position: relative; 
+        }
+
+        /* --- 2. Wadah Tombol dan Teks --- */
+        .content-container {
+            position: absolute;
+            bottom: 10%; /* Posisikan kontainer sekitar 10% dari bawah layar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* --- 3. Gaya Tombol Utama --- */
+        .main-button {
+            padding: 15px 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+			font-family: "Comic Sans MS", cursive;
+            
+            /* Warna Oranye dan Border */
+            background-color: #ff914d; 
+            border: none;
+            border-bottom: 5px solid #cc743e; /* Border bawah yang lebih gelap (3D effect) */
+            border-radius: 40px;
+            
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .main-button:hover {
+            background-color: #ffb070; /* Sedikit lebih cerah saat disentuh */
+            border-bottom: 5px solid #cc743e; 
+            transform: translateY(-2px);
+        }
+        
+        .main-button:active {
+            /* Efek saat diklik, memberi kesan tombol tertekan */
+            transform: translateY(3px); 
+            border-bottom: 2px solid #cc743e; 
+        }
+
+        /* --- 4. Gaya Teks Login/Register --- */
+        .auth-links {
+            font-size: 1.1em;
+            color: #333; /* Warna gelap */
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8); /* Tambahkan shadow putih agar terlihat jelas di atas rumput */
+        }
+
+        .auth-links a {
+            color: inherit;
+            text-decoration: none;
+            padding: 0 5px;
+        }
+
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .separator {
+            color: #555;
+            padding: 0 5px;
+        }
+		/* --- 5. Logo di Kiri Atas --- */
+		.logo {
+			position: absolute;
+			top: 40px;         /* Jarak dari atas */
+			left: 40px;        /* Jarak dari kiri */
+			width: 120px;      /* Ukuran logo (bisa diubah) */
+			height: auto;
+			z-index: 10;       /* Pastikan tampil di atas background */
+		}
+
+		.logo img {
+			width: 250%;
+			height: auto;
+		}
+
+        
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        
+        <button class="main-button" onclick="window.location.href='http://localhost/mathventure/pagepeta.php'">
+            Mulai Petualangan
+        </button>
+
+    </div>
+	<div class="logo">
+		<img src="http://localhost/mathventure/imgmathventure/mathventure.png" alt="Logo">
+	</div>
+
+
+</body>
+</html>

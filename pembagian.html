@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bekal Pembagian - MathVenture</title>
+    <!-- Memuat Tailwind CSS dari CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Mengatur font dasar dan latar belakang */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 30px 0;
+            
+            /* Background Awan */
+            background-image: url('http://localhost/mathventure/imgmathventure/bg.petualangan.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        /* Kontainer Utama */
+        .main-container {
+            max-width: 900px;
+            width: 95%;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling Judul Slide (BEKAL PEMBAGIAN) - Tema Hijau */
+        .main-title {
+            background-color: #059669; /* Hijau Emerald */
+            color: #ffffff;
+            padding: 0.5rem 2rem;
+            border-radius: 9999px;
+            font-size: 2rem;
+            font-weight: 900;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            border: 4px solid #064e3b; /* Hijau Tua */
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Styling Kotak Definisi */
+        .definition-box {
+            background-color: #d1fae5; /* Hijau Muda */
+            color: #1f2937;
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 3rem;
+            border: 3px solid #059669; 
+        }
+
+        /* Styling Langkah Pengurangan */
+        .step-card {
+            background-color: white;
+            border-left: 5px solid #059669;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Box Hasil Akhir */
+        .result-box {
+            background-color: #6ee7b7;
+            color: #064e3b;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-size: 1.75rem;
+            font-weight: 900;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 2rem;
+            border: 3px solid #047857;
+        }
+
+        /* Kartu Contoh Tambahan */
+        .example-card {
+            background-color: #ecfdf5;
+            border: 2px solid #34d399;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* --- ANIMASI --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translate3d(0, 40px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        .animated-text {
+            opacity: 0; 
+            animation: fadeInUp 0.7s forwards; 
+            animation-delay: var(--delay); 
+        }
+
+        /* Responsif */
+        @media (max-width: 640px) {
+            .main-title { font-size: 1.5rem; }
+            .definition-box { font-size: 1.1rem; padding: 1rem; }
+            .result-box { font-size: 1.25rem; }
+            .step-card { font-size: 1rem; flex-direction: column; text-align: center; }
+        }
+		/* Gaya CSS untuk Tombol Lanjut */
+.continue-button {
+    /* Posisi tetap di layar, tidak bergerak saat di-scroll */
+    position: fixed; 
+    
+    /* Posisikan 30px dari kanan dan 30px dari bawah */
+    right: 30px; 
+    bottom: 50px;
+    
+    /* Gaya visual tombol */
+    padding: 12px 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    background-color: #ee5578; /* Warna biru */
+    border: 2px solid #ee5578;
+    border-radius: 8px;
+    cursor: pointer; /* Menunjukkan bahwa ini dapat diklik */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+    z-index: 100; /* Pastikan tombol selalu di atas elemen lain */
+}
+
+/* Efek saat tombol disentuh/hover */
+.continue-button:hover {
+    background-color: #e82c57;
+}
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+
+        <!-- Judul -->
+        <div class="flex justify-center w-full">
+            <div class="main-title animated-text" style="--delay: 0.0s;">BEKAL PEMBAGIAN</div>
+        </div>
+
+        <!-- Definisi -->
+        <div class="flex justify-center w-full">
+            <div class="definition-box max-w-3xl animated-text" style="--delay: 0.3s;">
+                Pembagian adalah membagi sebuah angka menjadi beberapa kelompok yang sama besar. <br><br>
+                <span class="text-green-700">Pembagian juga bisa dianggap sebagai pengurangan yang dilakukan berulang-ulang.</span>
+            </div>
+        </div>
+
+        <!-- Soal Cerita -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-extrabold text-green-800 text-center mb-6 animated-text" style="--delay: 0.6s;">
+                Cara Menyelesaikan Soal Pembagian
+            </h2>
+
+            <div class="bg-green-50 p-6 rounded-xl border-2 border-green-200 text-center mx-auto max-w-2xl animated-text" style="--delay: 0.9s;">
+                <p class="text-xl font-bold text-gray-800 mb-4">
+                    "Ibu mempunyai <span class="text-green-600 text-2xl">12</span> biskuit dan akan membagikannya kepada anak-anaknya sama banyak. Ibu memiliki <span class="text-red-600 text-2xl">2</span> anak."
+                </p>
+                <div class="flex flex-wrap justify-center gap-2 mb-4 text-3xl">
+                    🍪 🍪 🍪 🍪 🍪 🍪 <br> 🍪 🍪 🍪 🍪 🍪 🍪
+                </div>
+                <p class="text-lg font-semibold text-gray-700">
+                    Berapa biskuit yang didapat oleh setiap anak?
+                </p>
+            </div>
+        </section>
+
+        <!-- Langkah Pengurangan Berulang -->
+        <section class="mb-16 max-w-2xl mx-auto">
+            <h3 class="font-extrabold text-2xl text-green-700 mb-4 animated-text" style="--delay: 1.2s;">
+                Langkah - langkah (Pengurangan Berulang):
+            </h3>
+
+            <!-- Langkah 1 -->
+            <div class="step-card animated-text" style="--delay: 1.4s;">
+                <span>1. <span class="text-green-600">12</span> - 2 = 10</span>
+                <span class="text-gray-500 text-base font-normal">(tersisa 10 biskuit)</span>
+            </div>
+
+            <!-- Langkah 2 -->
+            <div class="step-card animated-text" style="--delay: 1.6s;">
+                <span>2. <span class="text-green-600">10</span> - 2 = 8</span>
+                <span class="text-gray-500 text-base font-normal">(tersisa 8 biskuit)</span>
+            </div>
+
+            <!-- Langkah 3 -->
+            <div class="step-card animated-text" style="--delay: 1.8s;">
+                <span>3. <span class="text-green-600">8</span> - 2 = 6</span>
+                <span class="text-gray-500 text-base font-normal">(tersisa 6 biskuit)</span>
+            </div>
+
+            <!-- Langkah 4 -->
+            <div class="step-card animated-text" style="--delay: 2.0s;">
+                <span>4. <span class="text-green-600">6</span> - 2 = 4</span>
+                <span class="text-gray-500 text-base font-normal">(tersisa 4 biskuit)</span>
+            </div>
+
+            <!-- Langkah 5 -->
+            <div class="step-card animated-text" style="--delay: 2.2s;">
+                <span>5. <span class="text-green-600">4</span> - 2 = 2</span>
+                <span class="text-gray-500 text-base font-normal">(tersisa 2 biskuit)</span>
+            </div>
+
+            <!-- Langkah 6 -->
+            <div class="step-card animated-text" style="--delay: 2.4s;">
+                <span>6. <span class="text-green-600">2</span> - 2 = <span class="text-red-600 font-extrabold text-3xl">0</span></span>
+                <span class="text-green-600 font-bold text-base">HABIS!</span>
+            </div>
+
+            <div class="text-center mt-8 animated-text" style="--delay: 2.7s;">
+                <p class="text-xl font-bold text-gray-800 mb-2">Dapat ditulis:</p>
+                <div class="bg-gray-100 p-3 rounded-lg inline-block text-xl font-mono font-bold text-gray-700 border border-gray-300">
+                    12 - 2 - 2 - 2 - 2 - 2 - 2 = 0
+                </div>
+            </div>
+
+            <div class="flex justify-center animated-text" style="--delay: 3.0s;">
+                <div class="result-box text-center">
+                    <div>Bentuk Pembagian:</div>
+                    <div class="text-4xl mt-2">12 : 2 = 6</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contoh Tambahan -->
+        <section class="max-w-3xl mx-auto w-full pt-8 border-t-4 border-green-200">
+            <h3 class="font-extrabold text-3xl text-center text-green-800 mb-8 animated-text" style="--delay: 3.3s;">
+                Perhatikan Contoh Berikut:
+            </h3>
+
+            <!-- Contoh 1 -->
+            <div class="example-card animated-text" style="--delay: 3.6s;">
+                <p class="text-3xl font-extrabold text-green-900 mb-2">28 : 7 = 4</p>
+                <p class="text-lg text-gray-700 font-semibold mb-2">karena 28 - 7 - 7 - 7 - 7 = 0</p>
+                <div class="inline-block bg-green-200 text-green-800 px-4 py-1 rounded-full text-sm font-bold">
+                    Ada bilangan 7 sebanyak 4 kali
+                </div>
+            </div>
+
+            <!-- Contoh 2 -->
+            <div class="example-card animated-text" style="--delay: 3.9s;">
+                <p class="text-3xl font-extrabold text-green-900 mb-2">5 : 1 = 5</p>
+                <p class="text-lg text-gray-700 font-semibold mb-2">karena 5 - 1 - 1 - 1 - 1 - 1 = 0</p>
+                <div class="inline-block bg-green-200 text-green-800 px-4 py-1 rounded-full text-sm font-bold">
+                    Ada bilangan 1 sebanyak 5 kali
+                </div>
+            </div>
+
+            <!-- Contoh 3 -->
+            <div class="example-card animated-text" style="--delay: 4.2s;">
+                <p class="text-3xl font-extrabold text-green-900 mb-2">6 : 6 = 1</p>
+                <p class="text-lg text-gray-700 font-semibold mb-2">karena 6 - 6 = 0</p>
+                <div class="flex justify-center mt-2">
+                    <span class="text-3xl text-green-600 animate-bounce">↓</span>
+                </div>
+                <div class="inline-block bg-green-200 text-green-800 px-4 py-1 rounded-full text-sm font-bold mt-2">
+                    Ada bilangan 6 sebanyak 1 kali
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+	<button class="continue-button" onclick="window.location.href='http://localhost/mathventure/level10.php'">
+    Lanjut
+</button>
+</body>
+</html>
